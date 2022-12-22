@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body{
+
+            background-color: grey;
+
+        }
+    div#Board{
+
+        position: relative;
+        background-color: firebrick;
+        width: 200px;
+        height:200px;
+
+
+    }
+    .float-child{
+
+        
+        float:right;
+        padding:5px;
+
+    }
+    div#ZZ{
+
+        position: relative;
+        left:20px;
+        width:50px;
+        height:50px;
+        background-color: slategray;
+
+    }
+    div#ZO{
+
+        position: relative;
+        left:10px;
+        width:50px;
+        height: 50px;
+        background-color: powderblue;
+        
+    }
+    div#ZT{
+
+        position: relative;
+        width:50px;
+        height: 50px;
+        background: slategray;
+
+    }
+
+    div#OZ{
+
+        position: relative;
+        top:10px;
+        left:20px;
+        width:50px;
+        height:50px;
+        background-color: green;
+
+    }
+    div#OO{
+
+        position: relative;
+        left:10px;
+        top:10px;
+        width:50px;
+        height: 50px;
+        background-color: greenyellow;
+        
+    }
+    div#OT{
+
+        position: relative;
+        top:10px;
+        width:50px;
+        height: 50px;
+        background: green;
+
+    }
+
+    div#TZ{
+
+        position: relative;
+        left:20px;
+        top:20px;
+        width:50px;
+        height:50px;
+        background-color: goldenrod;
+
+    }
+    div#TO{
+
+        position: relative;
+        left:10px;
+        top:20px;
+        width:50px;
+        height: 50px;
+        background-color: gold;
+        
+    }
+    div#TT{
+
+        position: relative;
+        top:20px;
+        width:50px;
+        height: 50px;
+        background: goldenrod;
+
+    }
+    .XO{
+
+        width:40px;
+        height:40px;
+        margin:auto;
+
+    }
+    button#Reset{
+
+        position: relative;
+        top:30px;
+        padding: 10px;
+        width: 200px;
+        background-color: midnightblue;
+        color:white;
+        font-size: large;
+
+    }
+/*
+- Form for a username for both players
+- 
+*/
+
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="./js/tic-tac-toe.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <div id="Board" class="float-container" turn="X" style="display:none" winner="false">
+    <div id="ZZ" class="float-child" posx="0" posy="2">
+    </div>
+    <div id="ZO" class="float-child" posx="0" posy="1">
+    </div>
+    <div id="ZT" class="float-child" posx="0" posy="0">
+    </div>
+        <br>
+    <div id="OZ" class="float-child" posx="1" posy="2">
+    </div>
+    <div id="OO" class="float-child" posx="1" posy="1">
+    </div>
+    <div id="OT" class="float-child" posx="1" posy="0">
+    </div>
+        <br>
+    <div id="TZ" class="float-child" posx="2" posy="2">
+    </div>
+    <div id="TO" class="float-child" posx="2" posy="1">
+    </div>
+    <div id="TT" class="float-child" posx="2" posy="0">
+    </div>
+    <button id="Reset"><b>Reset the board?</b></button>
+    <div id="pics" style="display: none;">
+
+        <img id="O" class="XO" src="./images/O.png">
+        <img id="X" class="XO" src="./images/X.png">
+    </div>
+    </div>
+<br>
+<br>
+<br>
+<br>
+
+    <form>
+        <input type="text" placeholder="Player: X" id="fnam">
+        <input type="text" placeholder="Player: O" id="lnam">
+        <button type="button" id="submitButton">Submit</button>
+    </form>
+<br>
+<div id="root">Who is playing?</div>
+<div id="winCheck"></div>
+
+</body>
+</html>
