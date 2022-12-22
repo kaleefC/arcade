@@ -7,10 +7,7 @@ window.onload = function () {
       [null, null, null],
       [null, null, null]
     ]
-  }
-
-  let boxes = document.getElementsByClassName("float-child");
-  let resetBTN = document.getElementById('Reset')
+  };
 
   let winning = {
     winners: [
@@ -23,8 +20,19 @@ window.onload = function () {
             ['x', null, null]
           ]
         ],
-        'posx': [0,1,2],
-        'posy': [0,0,0]
+        'posx': [0, 1, 2],
+        'posy': [0, 0, 0],
+        'match': [
+          {
+            'xy': '00'
+          },
+          {
+            'xy': '10'
+          },
+          {
+            'xy': '20'
+          }
+        ]
       },
       {
         'player': 'XO',
@@ -35,8 +43,19 @@ window.onload = function () {
             [null, null, 'x']
           ]
         ],
-        'posx': [0,1,2],
-        'posy': [0,1,2]
+        'posx': [0, 1, 2],
+        'posy': [0, 1, 2],
+        'match': [
+          {
+            'xy': '00'
+          },
+          {
+            'xy': '11'
+          },
+          {
+            'xy': '22'
+          }
+        ]
       },
       {
         'player': 'XO',
@@ -47,8 +66,19 @@ window.onload = function () {
             [null, null, null]
           ]
         ],
-        'posx': [0,0,0],
-        'posy': [0,1,2]
+        'posx': [0, 0, 0],
+        'posy': [0, 1, 2],
+        'match': [
+          {
+            'xy': '00'
+          },
+          {
+            'xy': '01'
+          },
+          {
+            'xy': '02'
+          }
+        ]
       },
       {
         'player': 'XO',
@@ -59,8 +89,19 @@ window.onload = function () {
             [null, null, null]
           ]
         ],
-        'posx': [1,1,1],
-        'posy': [0,1,2]
+        'posx': [1, 1, 1],
+        'posy': [0, 1, 2],
+        'match': [
+          {
+            'xy': '10'
+          },
+          {
+            'xy': '11'
+          },
+          {
+            'xy': '12'
+          }
+        ]
       },
       {
         'player': 'XO',
@@ -71,8 +112,19 @@ window.onload = function () {
             ['x', 'x', 'x']
           ]
         ],
-        'posx': [2,2,2],
-        'posy': [0,1,2]
+        'posx': [2, 2, 2],
+        'posy': [0, 1, 2],
+        'match': [
+          {
+            'xy': '20'
+          },
+          {
+            'xy': '21'
+          },
+          {
+            'xy': '22'
+          }
+        ]
       },
       {
         'player': 'XO',
@@ -83,8 +135,19 @@ window.onload = function () {
             [null, null, 'x']
           ]
         ],
-        'posx': [2,2,2],
-        'posy': [0,1,2]
+        'posx': [0, 1, 2],
+        'posy': [2, 2, 2],
+        'match': [
+          {
+            'xy': '02'
+          },
+          {
+            'xy': '12'
+          },
+          {
+            'xy': '22'
+          }
+        ]
       },
       {
         'player': 'XO',
@@ -95,8 +158,19 @@ window.onload = function () {
             [null, 'x', null]
           ]
         ],
-        'posx': [1,1,1],
-        'posy': [0,1,2]
+        'posx': [0, 1, 2],
+        'posy': [1, 1, 1],
+        'match': [
+          {
+            'xy': '01'
+          },
+          {
+            'xy': '11'
+          },
+          {
+            'xy': '21'
+          }
+        ]
       },
       {
         'player': 'XO',
@@ -107,13 +181,28 @@ window.onload = function () {
             ['x', null, null]
           ]
         ],
-        'posx': [2,1,0],
-        'posy': [0,1,2]
+        'posx': [0, 1, 2],
+        'posy': [2, 1, 0],
+        'match': [
+          {
+            'xy': '02'
+          },
+          {
+            'xy': '11'
+          },
+          {
+            'xy': '20'
+          }
+        ]
       }
     ]
 
   };
 
+  let boxes = document.getElementsByClassName("float-child");
+  let resetBTN = document.getElementById('Reset');
+  let userBTN = document.getElementById('submitButton');
+  let newGame = gameState;
   let playerX = {};
   let playerO = {};
 
@@ -123,17 +212,42 @@ window.onload = function () {
   playerO['posx'] = [];
   playerO['posy'] = [];
 
-  
+  resetBTN.addEventListener('click', reset);
+  userBTN.addEventListener('click', nameSubmit);
+
   for (let c in boxes) {
 
-    console.log(typeof boxes[c])
     if (typeof boxes[c] == 'object') {
 
       boxes[c].addEventListener('click', turnClick);
     }
   }
 
-  resetBTN.addEventListener('click', reset);
+  function nameSubmit() {
+
+    let fnam = document.getElementById("fnam").value;
+    let lnam = document.getElementById('lnam').value;
+
+    if (fnam.length == 0 || lnam.length == 0) {
+
+      alert('Players one and two need a name to continue.');
+
+    } else {
+
+      document.getElementById("Board").setAttribute('style', "");
+
+      let htmlBody = `
+        <p> x = ${fnam}
+          <br> 
+          o = ${lnam}
+        </p>
+      `;
+
+      document.getElementById('fnam').setAttribute('player', fnam);
+      document.getElementById('lnam').setAttribute('player', lnam);
+      document.getElementById('root').innerHTML = htmlBody;
+    }
+  }
 
   function reset() {
 
@@ -149,16 +263,30 @@ window.onload = function () {
 
             newGame['board'][g][n] = null;
           }
-          
-
         }
       }
 
-      document.getElementById('Board').setAttribute('turn', "X")
+      document.getElementById('winCheck').innerText = "";
+      document.getElementById("root").innerText = "Who is playing?";
+      document.getElementById('fnam').value = "";
+      document.getElementById('fnam').removeAttribute('player');
+      document.getElementById('lnam').value = "";
+      document.getElementById('lnam').removeAttribute('player');
+      document.getElementById('Board').setAttribute('turn', "X");
+      document.getElementById('Board').setAttribute('style', 'display:none');
+      document.getElementById('Board').setAttribute('winner', 'false');
+
+      playerX = {};
+      playerO = {};
+
+      playerX['posx'] = [];
+      playerX['posy'] = [];
+
+      playerO['posx'] = [];
+      playerO['posy'] = [];
     }
-
-
   }
+
   function turnClick() {
 
     let turn = document.getElementById('Board').getAttribute('turn');
@@ -168,55 +296,61 @@ window.onload = function () {
     let player = turn.toLowerCase();
     let posx = document.getElementById(id).getAttribute('posx');
     let posy = document.getElementById(id).getAttribute('posy');
+    let isWinner = document.getElementById("Board").getAttribute("winner");
 
     if (turn == "X") {
 
       taken = gameboard(player, posx, posy);
 
-      if (taken == false) {
+      if (isWinner == 'false' && taken == false) {
+
+        let currentTurn = "X";
 
         board.setAttribute("turn", "O");
         turn = document.getElementById('Board').getAttribute('turn');
         document.getElementById(id).innerHTML = document.getElementById('X').outerHTML;
-
 
         playerX['posx'].push(parseInt(posx));
         playerX['posy'].push(parseInt(posy));
 
         for (let w in winning['winners']) {
 
-          let wposx = winning['winners'][w]['posx'];
-          let wposy = winning['winners'][w]['posy'];
+          let matchZero = parseInt('0');
 
-          // use array.includes('', '', '')
+          for (let p in playerX['posx']) {
 
-          // if (playerX['posx'].length > 2) { //<-- working on correcting logic
+            let xy = `${playerX['posx'][p]}${playerX['posy'][p]}`;
 
-          //   console.log(playerX['posx'].includes(wposx));
-          //   console.log(playerX['posy'].includes(wposy));
+            for (let m in winning['winners'][w]['match']) {
 
-          //    if (playerX['posx'].includes(wposx) && playerX['posy'].includes(wposy)) {
+              let eachMatch = winning['winners'][w]['match'][m]['xy'];
 
-          //   console.log('You Win!!! Player X'); 
-          // }
-            
+              if (xy == eachMatch) {
 
-          // }
+                matchZero++;
 
+              }
+            }
 
+            if (matchZero == 3) {
 
-         
+              let attrPlayer = document.getElementById('fnam').getAttribute('player');
+
+              console.log('Winner Winner Chicken Dinner!');
+              document.getElementById('winCheck').innerText = `Winner Winner Check Dinner! Winner is player: ${attrPlayer} ${currentTurn}`;
+              document.getElementById('Board').setAttribute("winner", true);
+            }
+          }
         }
-
       }
 
-    }
-
-    if (turn == "O") {
+    } else {
 
       taken = gameboard(player, posx, posy);
 
-      if (taken == false) {
+      if (isWinner == 'false' && taken == false) {
+
+        let currentTurn = 'O';
 
         board.setAttribute("turn", "X");
         turn = document.getElementById('Board').getAttribute('turn');
@@ -227,29 +361,35 @@ window.onload = function () {
 
         for (let w in winning['winners']) {
 
-          let wposx = winning['winners'][w]['posx'];
-          let wposy = winning['winners'][w]['posy'];
+          let matchZero = parseInt('0');
 
+          for (let p in playerO['posx']) {
 
-          // if (playerO['posx'].includes(wposx) && playerO['posy'].includes(wposy)) { //<-- working on correcting logic
+            let xy = `${playerO['posx'][p]}${playerO['posy'][p]}`;
 
-          //   console.log('You Win!!! Player O');
-          // }
+            for (let m in winning['winners'][w]['match']) {
+
+              let eachMatch = winning['winners'][w]['match'][m]['xy'];
+
+              if (xy == eachMatch) {
+
+                matchZero++;
+              }
+            }
+
+            if (matchZero == 3) {
+
+              let attrPlayer = document.getElementById('lnam').getAttribute('player');
+
+              console.log('Winner Winner Chicken Dinner!');
+              document.getElementById('winCheck').innerText = `Winner Winner Check Dinner! Winner is player: ${attrPlayer} ${currentTurn}`;
+              document.getElementById('Board').setAttribute("winner", true);
+            }
+          }
         }
-        
       }
     }
-    console.log(`new turn: ${turn}`);
-
-    // console.log(newGame);
-    // console.log('player X')
-    // console.log(JSON.stringify(playerX, null, 2));
-    // console.log('player O')
-    // console.log(JSON.stringify(playerO, null, 2));
-
   }
-
-  let newGame = gameState;
 
   function gameboard(str, posx, posy) {
 
@@ -260,12 +400,10 @@ window.onload = function () {
       newGame['board'][posx][posy] = str;
 
       taken = false;
+
     } else {
 
-      console.log('taken');
-
       taken = true;
-
     }
 
     return taken;

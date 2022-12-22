@@ -127,7 +127,10 @@
         font-size: large;
 
     }
-
+/*
+- Form for a username for both players
+- 
+*/
 
     </style>
     <meta charset="UTF-8">
@@ -135,24 +138,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="./js/tic-tac-toe.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
-    
-    <script>
-
-    $(document).ready(function(){
-
-        // $('#pics').hide();
-
-        // $('.float-child').each(function () {
-
-        //     console.log($(this).parent().html());
-        // });
-
-    });
-    </script>
     <title>Tic Tac Toe</title>
 </head>
 <body>
-    <div id="Board" class="float-container" turn="X">
+    <div id="Board" class="float-container" turn="X" style="display:none" winner="false">
     <div id="ZZ" class="float-child" posx="0" posy="2">
     </div>
     <div id="ZO" class="float-child" posx="0" posy="1">
@@ -179,8 +168,20 @@
         <img id="O" class="XO" src="./images/O.png">
         <img id="X" class="XO" src="./images/X.png">
     </div>
-
     </div>
+<br>
+<br>
+<br>
+<br>
+
+    <form>
+        <input type="text" placeholder="Player: X" id="fnam">
+        <input type="text" placeholder="Player: O" id="lnam">
+        <button type="button" id="submitButton">Submit</button>
+    </form>
+<br>
+<div id="root">Who is playing?</div>
+<div id="winCheck"></div>
 
 </body>
 </html>
